@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+ </head>
+ <body>
+ <form>
+    <input type="text" value="" id="interval">
+    <input type="button" value="Submit" id="Submit_button">
+</form>
+  <table>
+        <tr>
+        <td colspan="3"><img src="img1.png" width=200 name="slide_show"></td>
+        </tr>
+
+ <script language=JavaScript>
+date=new Date();
+hours=date.getHours();
+ 
+if (hours >=  6 && hours < 10) var x = 1, am_pm = 'morning';
+else if (hours >= 10 && hours < 16) var x = 2, am_pm = 'day';
+else if (hours >= 16 && hours < 21) var x = 3, am_pm = 'evening';
+else if (hours >= 21 || hours <  6) var x = 4, am_pm = 'night';
+document.write ('<body style=\'background-repeat: no-repeat; background-size: cover\' background="' + x + '.jpg" align="center" text="pink">');
+
+minutes=date.getMinutes();
+if (minutes<10) {
+minutes="0"+minutes;
+}
+seconds=date.getSeconds();
+if(seconds<10){
+seconds="0"+seconds;
+}
+ 
+document.write("Now is "+hours+" : "+minutes+" : "+seconds+"  "+am_pm);
+
+all_images = new Array (
+"img1.png",
+"img2.png",
+"img3.png",
+"img4.png");
+
+var ImgNum = 0;
+var ImgLength = all_images.length - 1;
+var lock = false;
+var run;
+var delay;
+
+document.getElementById('Submit_button').addEventListener('click', function(){
+var input = document.getElementById('interval').value;
+delay = input * 1000;
+auto();
+});
+
+function chgImg(direction) {
+ if (document.images) {
+  ImgNum = ImgNum + direction;
+  if (ImgNum > ImgLength) { ImgNum = 0; }
+  if (ImgNum < 0) { ImgNum = ImgLength; }
+  document.slide_show.src = all_images[ImgNum];
+ }
+}
+function auto() {
+ if (lock == true) {
+  lock = false;
+  window.clearInterval(run);
+ }
+ else if (lock == false) {
+  lock = true;
+  run = setInterval("chgImg(1)", delay);
+ }
+}
+
+
+</script>
+</body>
+</html>
